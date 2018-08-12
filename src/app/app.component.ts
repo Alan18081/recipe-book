@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'recipes-book';
+  activeNav = 'recipes';
+  changeLink(event: {path: string}): void {
+    this.activeNav = event.path;
+  }
 }
