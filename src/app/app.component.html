@@ -6,6 +6,5 @@
   </div>
 </div>
 <div class="container">
-  <app-recipes *ngIf="activeNav === 'recipes'"></app-recipes>
-  <app-shopping-list *ngIf="activeNav === 'shopping'"></app-shopping-list>
+  <router-outlet></router-outlet>
 </div>
