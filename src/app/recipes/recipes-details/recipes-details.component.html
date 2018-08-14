@@ -1,17 +1,23 @@
-<div>
-  <img src="{{ recipe.imageUrl }}" class="img-fluid" alt="{{recipe.name}}">
-  <h3>{{ recipe.name }}</h3>
-  <p>
-    {{recipe.description}}
-  </p>
-  <div class="dropdown" appDropdown>
-    <button class="btn btn-outline-primary dropdown-toggle btn-sm">
-      Manage recipe <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu" #recipeDropdown>
-      <li>To shopping List</li>
-      <li>Edit recipe</li>
-      <li>Remove recipe</li>
-    </ul>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div *ngIf="recipe">
+        <img src="{{ recipe.imageUrl }}" class="img-fluid" alt="{{recipe.name}}">
+        <h3>{{ recipe.name }}</h3>
+        <p>
+          {{recipe.description}}
+        </p>
+        <div class="dropdown" appDropdown>
+          <button class="btn btn-outline-primary dropdown-toggle btn-sm">
+            Manage recipe <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" #recipeDropdown>
+            <li>To shopping List</li>
+            <li>Edit recipe</li>
+            <li>Remove recipe</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
