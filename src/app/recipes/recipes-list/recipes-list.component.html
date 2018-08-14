@@ -1,11 +1,14 @@
 <button class="btn btn-outline-primary btn-sm" routerLink="/recipes/new">New recipe</button>
 <hr>
 <div class="row">
-  <div class="col-12">
+  <div class="col-4">
     <app-recipes-item
       *ngFor="let recipeItem of recipes"
       [recipe]="recipeItem"
       (selectedRecipe)="selectRecipe($event)"
     ></app-recipes-item>
+  </div>
+  <div class="col-8">
+    <router-outlet></router-outlet>
   </div>
 </div>

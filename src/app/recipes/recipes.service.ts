@@ -28,4 +28,7 @@ export class RecipesService {
     this.recipes.push(recipe);
     this.recipesChanged.emit(this.getRecipes());
   }
+  updateRecipe(updateId: string, recipe: Recipe): void {
+    this.recipes[this.recipes.findIndex(({id}) => updateId)] = recipe;
+  }
 }

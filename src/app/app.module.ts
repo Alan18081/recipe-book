@@ -15,6 +15,7 @@ import { AddRecipeComponent } from './recipes/add-recipe/add-recipe.component';
 import {RecipesService} from './recipes/recipes.service';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AppRoutesModule } from './app-routes.module';
+import { EditRecipeComponent } from './recipes/edit-recipe/edit-recipe.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { AppRoutesModule } from './app-routes.module';
     RecipesItemComponent,
     DropdownDirective,
     AddRecipeComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    EditRecipeComponent
   ],
   imports: [
     BrowserModule,

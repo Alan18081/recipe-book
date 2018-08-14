@@ -1,0 +1,35 @@
+<div>
+  <div class="form-group">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Title"
+      [(ngModel)]="name"
+    >
+  </div>
+  <div class="form-group">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Description"
+      [(ngModel)]="description"
+    >
+  </div>
+  <div class="form-group">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Image url"
+      [(ngModel)]="imageUrl"
+    >
+    <img *ngIf="imageUrl" [src]="imageUrl" alt="">
+  </div>
+  <div class="form-group">
+    <select multiple (change)="setIngredient($event)" class="form-control">
+      <option *ngFor="let ing of ingredients" [value]="ing.id">
+        {{ ing.name }} ({{ing.amount}})
+      </option>
+    </select>
+  </div>
+  <button class="btn btn-outline-success" (click)="saveRecipe()">Save recipe</button>
+</div>
