@@ -6,6 +6,7 @@
       *ngFor="let recipeItem of recipes"
       [recipe]="recipeItem"
       (selectedRecipe)="selectRecipe($event)"
+      [routerLink]="['/recipes', recipeItem.id]"
     ></app-recipes-item>
   </div>
   <div class="col-8">

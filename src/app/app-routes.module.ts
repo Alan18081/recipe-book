@@ -15,12 +15,12 @@ const appRoutes: Routes = [
     component: RecipesListComponent,
     children: [
       {
-        path: 'recipes/:id',
-        component: RecipesDetailsComponent
-      },
-      {
         path: 'recipes/new',
         component: AddRecipeComponent
+      },
+      {
+        path: 'recipes/:id',
+        component: RecipesDetailsComponent
       },
       {
         path: 'recipes/:id/edit',
@@ -29,10 +29,9 @@ const appRoutes: Routes = [
       }
     ]
   },
-  { path: 'recipes/:id', component: RecipesDetailsComponent },
   { path: 'shopping', component: ShoppingListComponent },
-  { path: 'not-found', component: NotFoundComponent },
-  { path: '**', redirectTo: 'not-found' }
+  // { path: 'not-found', component: NotFoundComponent },
+  // { path: '**', redirectTo: 'not-found' }
 ];
 
 @NgModule({

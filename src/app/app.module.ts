@@ -16,6 +16,7 @@ import {RecipesService} from './recipes/recipes.service';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AppRoutesModule } from './app-routes.module';
 import { EditRecipeComponent } from './recipes/edit-recipe/edit-recipe.component';
+import {ModalComponent} from './components/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { EditRecipeComponent } from './recipes/edit-recipe/edit-recipe.component
     DropdownDirective,
     AddRecipeComponent,
     NotFoundComponent,
-    EditRecipeComponent
+    EditRecipeComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,

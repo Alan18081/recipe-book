@@ -4,6 +4,7 @@ import {Ingredient} from '../../shared/ingredient.model';
 import {RecipesService} from '../recipes.service';
 import {ActivatedRoute, Params} from '@angular/router';
 import {Recipe} from '../recipe.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-edit-recipe',
@@ -18,6 +19,7 @@ export class EditRecipeComponent implements OnInit {
   selectedIngredients: Ingredient[] = [];
   activeId: string;
   isSaved: false;
+  warningMessage: string;
   constructor(
     private shoppingService: ShoppingService,
     private recipesService: RecipesService,
@@ -56,8 +58,17 @@ export class EditRecipeComponent implements OnInit {
     }
   }
 
+  canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
+    if (this.isSaved) {
+      return true;
+    } else {
+      this.warningMessage = '';
+      return false;
+    }
+  }
+
   saveRecipe(): void {
-    const updatedRecipe = new Recipe(this.name, this.description, this.selectedIngredients);
+    const updatedRecipe = new Recipe(this.name, this.description, this.imageUrl, this.selectedIngredients);
     this.recipesService.updateRecipe(this.activeId, updatedRecipe);
   }
 }
