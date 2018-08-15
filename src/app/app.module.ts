@@ -17,6 +17,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { AppRoutesModule } from './app-routes.module';
 import { EditRecipeComponent } from './recipes/edit-recipe/edit-recipe.component';
 import {ModalComponent} from './components/modal/modal.component';
+import { CanDeactivateGuard } from './canDeactivateService';
+import { ErrorPageComponent } from './components/error-page/error-page.component';
 
 @NgModule({
   declarations: [
@@ -32,14 +34,15 @@ import {ModalComponent} from './components/modal/modal.component';
     AddRecipeComponent,
     NotFoundComponent,
     EditRecipeComponent,
-    ModalComponent
+    ModalComponent,
+    ErrorPageComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutesModule
   ],
-  providers: [ShoppingService, RecipesService],
+  providers: [ShoppingService, RecipesService, CanDeactivateGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -30,5 +30,6 @@ export class RecipesService {
   }
   updateRecipe(updateId: string, recipe: Recipe): void {
     this.recipes[this.recipes.findIndex(({id}) => id === updateId)] = recipe;
+    this.recipesChanged.emit(this.getRecipes());
   }
 }

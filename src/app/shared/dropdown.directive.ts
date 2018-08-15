@@ -1,4 +1,4 @@
-import {Directive, HostBinding, HostListener, ContentChild, OnInit, ElementRef, ViewContainerRef} from '@angular/core';
+import {Directive, HostBinding, HostListener, ContentChild, OnInit, ElementRef} from '@angular/core';
 
 @Directive({
   selector: '[appDropdown]'

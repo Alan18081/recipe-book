@@ -22,7 +22,10 @@
       placeholder="Image url"
       [(ngModel)]="imageUrl"
     >
-    <img *ngIf="imageUrl" [src]="imageUrl" alt="">
+    <img *ngIf="imageUrl" [src]="imageUrl" alt="" class="img-fluid" [ngStyle]="{
+      marginTop: '20px',
+      maxWidth: '300px'
+    }">
   </div>
   <div class="form-group">
     <select multiple (change)="setIngredient($event)" class="form-control">
@@ -32,4 +35,10 @@
     </select>
   </div>
   <button class="btn btn-outline-success" (click)="saveRecipe()">Save recipe</button>
+  <button
+     class="btn btn-outline-secondary"
+     [routerLink]="['/recipes', activeId]"
+  >
+    Back to recipe
+  </button>
 </div>

@@ -4,9 +4,10 @@ import { RecipesListComponent } from './recipes/recipes-list/recipes-list.compon
 import { AddRecipeComponent } from './recipes/add-recipe/add-recipe.component';
 import { RecipesDetailsComponent } from './recipes/recipes-details/recipes-details.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
-import { NotFoundComponent } from './not-found/not-found.component';
 import {EditRecipeComponent} from './recipes/edit-recipe/edit-recipe.component';
 import {CanDeactivateGuard} from './canDeactivateService';
+import { ErrorPageComponent } from './components/error-page/error-page.component';
+import { RecipeResolverService } from './recipe-resolver.service';
 
 
 const appRoutes: Routes = [
@@ -20,7 +21,10 @@ const appRoutes: Routes = [
       },
       {
         path: 'recipes/:id',
-        component: RecipesDetailsComponent
+        component: RecipesDetailsComponent,
+        resolve: {
+          recipe: RecipeResolverService
+        }
       },
       {
         path: 'recipes/:id/edit',
@@ -30,8 +34,8 @@ const appRoutes: Routes = [
     ]
   },
   { path: 'shopping', component: ShoppingListComponent },
-  // { path: 'not-found', component: NotFoundComponent },
-  // { path: '**', redirectTo: 'not-found' }
+  { path: 'not-found', component: ErrorPageComponent, data: {message: 'Page not found'} },
+  { path: '**', redirectTo: 'not-found' }
 ];
 
 @NgModule({

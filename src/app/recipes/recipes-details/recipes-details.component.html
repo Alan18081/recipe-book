@@ -12,9 +12,9 @@
             Manage recipe <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" #recipeDropdown>
-            <li>To shopping List</li>
-            <li>Edit recipe</li>
-            <li>Remove recipe</li>
+            <li class="dropdown-item">To shopping List</li>
+            <li class="dropdown-item" [routerLink]="['/recipes',recipe.id,'edit']">Edit recipe</li>
+            <li class="dropdown-item">Remove recipe</li>
           </ul>
         </div>
       </div>

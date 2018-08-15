@@ -19,7 +19,7 @@ export class EditRecipeComponent implements OnInit {
   selectedIngredients: Ingredient[] = [];
   activeId: string;
   isSaved: false;
-  warningMessage: string;
+  warningModalShown = false;
   constructor(
     private shoppingService: ShoppingService,
     private recipesService: RecipesService,
@@ -40,9 +40,10 @@ export class EditRecipeComponent implements OnInit {
   }
 
   setActiveRecipeData(id: string): void {
-    const {name, description, ingredients} = this.recipesService.getRecipeById(id);
+    const {name, description, imageUrl, ingredients} = this.recipesService.getRecipeById(id);
     this.name = name;
     this.description = description;
+    this.imageUrl = imageUrl;
     this.ingredients = ingredients;
   }
 
@@ -62,7 +63,7 @@ export class EditRecipeComponent implements OnInit {
     if (this.isSaved) {
       return true;
     } else {
-      this.warningMessage = '';
+      this.warningModalShown = true;
       return false;
     }
   }
