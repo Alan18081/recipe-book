@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-form',
@@ -12,10 +12,29 @@ export class FormComponent implements OnInit {
 
   ngOnInit() {
     this.signupForm = new FormGroup({
-      'username': new FormControl(null, Validators.required),
+      'name': new FormGroup({
+        'firstName': new FormControl(null, [Validators.required, this.validateName.bind(this)]),
+        'lastName': new FormControl(null, Validators.required),
+      }),
+      'age': new FormControl(null, [Validators.required, Validators.pattern(/^\d+$/)]),
       'email': new FormControl(null, [Validators.required, Validators.email]),
-      'gender': new FormControl('male', )
+      'gender': new FormControl('male'),
+      'friends': new FormArray([])
     });
   }
+  addFriend(): void {
+    const friendControl = new FormControl();
+    (<FormArray>this.signupForm.get('friends')).push(friendControl);
+  }
 
+  submit(): void {
+    console.log(this.signupForm.value);
+  }
+
+  validateName(control: FormControl): {[s: string]: boolean} {
+    if (control.value && control.value.indexOf('s') !== -1) {
+      console.log('Printed s');
+      return {'haveS': true};
+    }
+  }
 }

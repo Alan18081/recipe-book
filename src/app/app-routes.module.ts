@@ -8,6 +8,7 @@ import {EditRecipeComponent} from './recipes/edit-recipe/edit-recipe.component';
 import {CanDeactivateGuard} from './canDeactivateService';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
 import { RecipeResolverService } from './recipe-resolver.service';
+import {FormComponent} from './form/form.component';
 
 
 const appRoutes: Routes = [
@@ -32,6 +33,10 @@ const appRoutes: Routes = [
         canDeactivate: [CanDeactivateGuard]
       }
     ]
+  },
+  {
+    path: 'form',
+    component: FormComponent
   },
   { path: 'shopping', component: ShoppingListComponent },
   { path: 'not-found', component: ErrorPageComponent, data: {message: 'Page not found'} },
