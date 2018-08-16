@@ -1,35 +1,55 @@
-<div>
+<form (ngSubmit)="saveRecipe(f)" #f="ngForm">
   <div class="form-group">
     <input
       type="text"
       class="form-control"
       placeholder="Title"
-      [(ngModel)]="name"
+      name="title"
+      ngModel
+      required
+      #title="ngModel"
     >
+    <p class="alert alert-danger" *ngIf="!title.valid && title.touched">Please, provide title</p>
   </div>
   <div class="form-group">
     <input
       type="text"
       class="form-control"
       placeholder="Description"
-      [(ngModel)]="description"
+      name="description"
+      ngModel
+      required
     >
+    <p class="alert alert-danger" *ngIf="!title.valid && title.touched">Please, provide description</p>
   </div>
   <div class="form-group">
     <input
       type="text"
       class="form-control"
       placeholder="Image url"
-      [(ngModel)]="imageUrl"
+      name="imageUrl"
+      ngModel
+      required
     >
-    <img *ngIf="imageUrl" [src]="imageUrl" alt="">
+    <p class="alert alert-danger" *ngIf="!title.valid && title.touched">Please, provide image url</p>
+    <!--<img *ngIf="imageUrl" [src]="imageUrl" alt="">-->
   </div>
   <div class="form-group">
-    <select multiple (change)="setIngredient($event)" class="form-control">
+    <select multiple (change)="setIngredient($event)" class="form-control" [ngModel]="">
       <option *ngFor="let ing of ingredients" [value]="ing.id">
         {{ ing.name }} ({{ing.amount}})
       </option>
     </select>
   </div>
-  <button class="btn btn-outline-success" (click)="saveRecipe()">Save recipe</button>
-</div>
+  <div #author="ngModelGroup" ngModelGroup="author">
+    <strong>Author</strong>
+    <div class="form-group">
+      <input type="text" class="form-control" name="name" ngModel placeholder="Name">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" name="country" ngModel placeholder="Country">
+    </div>
+  </div>
+  <button class="btn btn-outline-success" type="submit">Save recipe</button>
+  <button class="btn btn-outline-secondary">Reset form</button>
+</form>

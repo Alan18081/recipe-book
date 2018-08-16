@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {ShoppingService} from '../../shopping-list/shopping.service';
 import {Ingredient} from '../../shared/ingredient.model';
 import {Recipe} from '../recipe.model';
 import {RecipesService} from '../recipes.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-add-recipe',
@@ -10,10 +11,8 @@ import {RecipesService} from '../recipes.service';
   styleUrls: ['./add-recipe.component.css']
 })
 export class AddRecipeComponent implements OnInit {
+  @ViewChild('f') form: NgForm;
   ingredients: Ingredient[];
-  name: string;
-  description: string;
-  imageUrl: string;
   selectedIngredients: Ingredient[] = [];
   constructor(
     private shoppingService: ShoppingService,
@@ -39,14 +38,19 @@ export class AddRecipeComponent implements OnInit {
     }
   }
 
-  saveRecipe(): void {
-    const newRecipe = new Recipe(
-      this.name,
-      this.description,
-      this.imageUrl,
-      this.selectedIngredients
-    );
-    console.log(this.selectedIngredients);
-    this.recipesService.addRecipe(newRecipe);
+  saveRecipe(form: NgForm): void {
+    // const newRecipe = new Recipe(
+    //   this.name,
+    //   this.description,
+    //   this.imageUrl,
+    //   this.selectedIngredients
+    // );
+    // console.log(this.selectedIngredients);
+    // this.recipesService.addRecipe(newRecipe);
+    console.log(form.value);
+  }
+
+  clearForm(): void {
+    this.form.form.reset();
   }
 }

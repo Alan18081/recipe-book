@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import {FormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
@@ -19,6 +19,8 @@ import { EditRecipeComponent } from './recipes/edit-recipe/edit-recipe.component
 import {ModalComponent} from './components/modal/modal.component';
 import { CanDeactivateGuard } from './canDeactivateService';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
+import { UsersSevice } from './users.sevice';
+import { FormComponent } from './form/form.component';
 
 @NgModule({
   declarations: [
@@ -35,14 +37,16 @@ import { ErrorPageComponent } from './components/error-page/error-page.component
     NotFoundComponent,
     EditRecipeComponent,
     ModalComponent,
-    ErrorPageComponent
+    ErrorPageComponent,
+    FormComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutesModule
+    AppRoutesModule,
+    ReactiveFormsModule
   ],
-  providers: [ShoppingService, RecipesService, CanDeactivateGuard],
+  providers: [ShoppingService, RecipesService, CanDeactivateGuard, UsersSevice],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
