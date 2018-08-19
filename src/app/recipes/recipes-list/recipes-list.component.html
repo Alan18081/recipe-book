@@ -1,9 +1,16 @@
 <button class="btn btn-outline-primary btn-sm" routerLink="/recipes/new">New recipe</button>
 <hr>
+<input
+  type="text"
+  class="form-control"
+  placeholder="Recipe name"
+  [(ngModel)]="filterString"
+>
+<hr>
 <div class="row">
   <div class="col-4">
     <app-recipes-item
-      *ngFor="let recipeItem of recipes"
+      *ngFor="let recipeItem of recipes | filter:filterString:'name'"
       [recipe]="recipeItem"
       (selectedRecipe)="selectRecipe($event)"
       [routerLink]="['/recipes', recipeItem.id]"

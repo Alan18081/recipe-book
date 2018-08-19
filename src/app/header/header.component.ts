@@ -1,13 +1,20 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../auth/auth.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: []
 })
-export class HeaderComponent {
-  @Output() linkChanged = new EventEmitter<{path: string}>();
-  toggleNav(path: string): void {
-    this.linkChanged.emit({path});
+export class HeaderComponent implements OnInit {
+  isAuthenticated = false;
+  constructor(private authService: AuthService) {}
+
+  ngOnInit() {
+    this.isAuthenticated = this.authService.isAuthenticated();
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }
