@@ -1,35 +1,40 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {Observable, Subject} from 'rxjs';
 import {Recipe} from './recipe.model';
 import {Ingredient} from '../shared/ingredient.model';
-import {ShoppingService} from '../shopping-list/shopping.service';
+import {Injectable} from '@angular/core';
+import { HttpClient, HttpEvent } from '@angular/common/http';
+import {map} from 'rxjs/operators';
+import * as firebase from 'firebase';
+import {AuthService} from '../auth/auth.service';
 
+@Injectable()
 export class RecipesService {
-  recipeSelected = new EventEmitter<Recipe>();
-  recipesChanged = new EventEmitter<Recipe[]>();
-  private recipes: Recipe[] = [
-    new Recipe(
-      'New recipe',
-      'Some great and taste recipe',
-      'https://cdn-image.myrecipes.com/sites/default/files/styles/4_3_horizontal_-_1200x900/public/1506120378/MR_0917170472.jpg?itok=aWyDp3CAhttps://cdn-image.myrecipes.com/sites/default/files/styles/4_3_horizontal_-_1200x900/public/1506120378/MR_0917170472.jpg?itok=aWyDp3CA',
-      [
-        new Ingredient('Apple', 3),
-        new Ingredient('Potato', 2)
-      ]
-    )
-  ];
-  constructor() {}
-  getRecipes(): Recipe[] {
-    return this.recipes.slice();
+  url = 'https://todo-ea259.firebaseio.com/recipes.json';
+  recipeSelected = new Subject<Recipe>();
+  recipesChanged = new Subject<Recipe[]>();
+  private recipes: Recipe[] = [];
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService
+  ) {}
+  getRecipes() {
+    this.http.get(`${this.url}/`, {
+      observe: 'events'
+    }).subscribe((event: HttpEvent<any>) => {
+      console.log(event);
+    });
   }
-  getRecipeById(selectedId: string): Recipe | undefined {
-    return this.recipes.find(({id}) => id === selectedId);
+  addRecipe(recipe: Recipe): Observable<any> {
+    return this.http.post(this.url, recipe);
   }
-  addRecipe(recipe: Recipe): void {
-    this.recipes.push(recipe);
-    this.recipesChanged.emit(this.getRecipes());
+  updateRecipe(id: string, recipe: Recipe): Observable<any> {
+    return this.http.put(`${this.url}/${id}`, recipe)
+      .pipe(
+        map((response: Response) => response.json())
+      );
   }
-  updateRecipe(updateId: string, recipe: Recipe): void {
-    this.recipes[this.recipes.findIndex(({id}) => id === updateId)] = recipe;
-    this.recipesChanged.emit(this.getRecipes());
+  getRecipeById(id: string): Recipe {
+    return this.recipes[id];
   }
+
 }

@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-8 offset-2">
+      <h2 align="center">Login</h2>
+      <form (ngSubmit)="submit(f)" class="card" #f="ngForm">
+        <div class="card-body">
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Email"
+              name="email"
+              ngModel
+              email
+              required
+            >
+          </div>
+          <div class="form-group">
+            <input
+              type="password"
+              class="form-control"
+              placeholder="Password"
+              name="password"
+              ngModel
+              email
+              required
+            >
+          </div>
+          <button class="btn btn-primary d-block">Login</button>
+          <button class="btn btn-outline-secondary d-block" type="button" routerLink="/signup">Create account</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
