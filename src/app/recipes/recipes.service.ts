@@ -2,7 +2,7 @@ import {Observable, Subject} from 'rxjs';
 import {Recipe} from './recipe.model';
 import {Ingredient} from '../shared/ingredient.model';
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient, HttpEvent } from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import * as firebase from 'firebase';
 import {AuthService} from '../auth/auth.service';
@@ -18,7 +18,11 @@ export class RecipesService {
     private authService: AuthService
   ) {}
   getRecipes() {
-    return this.http.get(`${this.url}/`);
+    this.http.get(`${this.url}/`, {
+      observe: 'events'
+    }).subscribe((event: HttpEvent<any>) => {
+      console.log(event);
+    });
   }
   addRecipe(recipe: Recipe): Observable<any> {
     return this.http.post(this.url, recipe);

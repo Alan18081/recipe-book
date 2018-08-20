@@ -1,4 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import {Store} from '@ngrx/store';
+import * as ShoppingListActions from '../store/shopping-list.actions';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -9,16 +11,16 @@ export class ShoppingEditComponent implements OnInit {
   @Output() ingredientAdded = new EventEmitter<{name: string; amount: number}>();
   name: string;
   amount: number;
-  constructor() { }
+  constructor(private store: Store<any>) { }
 
   ngOnInit() {
   }
 
   addIngredient(): void {
-    this.ingredientAdded.emit({
+    this.store.dispatch(new ShoppingListActions.AddIngredient({
       name: this.name,
       amount: this.amount
-    });
+    }));
   }
 
 }
