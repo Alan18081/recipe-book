@@ -40,7 +40,7 @@ export class AddRecipeComponent implements OnInit {
     );
     this.recipesService.addRecipe(newRecipe);
   }
-  
+
 
   addIngredient(): void {
     (<FormArray>this.form.get('ingredients')).push(
