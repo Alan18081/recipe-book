@@ -14,12 +14,12 @@ export class RecipesComponent implements OnInit {
   constructor(private recipesService: RecipesService) { }
 
   ngOnInit() {
-    this.recipesService.getRecipes().subscribe((recipes: Recipe[]) => {
-      this.recipes = recipes;
-    });
-    this.recipesService.recipesChanged.subscribe((recipes: Recipe[]) => {
-      this.recipes = recipes;
-    });
+    // this.recipesService.getRecipes().subscribe((recipes: Recipe[]) => {
+    //   this.recipes = recipes;
+    // });
+    // this.recipesService.recipesChanged.subscribe((recipes: Recipe[]) => {
+    //   this.recipes = recipes;
+    // });
   }
 
   setActiveRecipe(event: Recipe) {

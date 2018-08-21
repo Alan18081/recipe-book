@@ -10,7 +10,7 @@ const appRoutes: Routes = [
     pathMatch: 'full'
   },
   { path: 'recipes', loadChildren: './recipes/recipes.module#RecipesModule' },
-  // { path: 'shopping', component: ShoppingListComponent },
+  { path: 'shopping', component: ShoppingListComponent },
   { path: 'not-found', component: ErrorPageComponent, data: {message: 'Page not found'} },
   { path: '**', redirectTo: 'not-found' }
 ];

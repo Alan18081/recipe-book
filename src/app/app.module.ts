@@ -11,6 +11,8 @@ import {AuthModule} from './auth/auth.module';
 import {ShoppingModule} from './shopping-list/shopping.module';
 import { HomeComponent } from './home/home.component';
 import { CoreModule } from './core/core.module';
+import {StoreModule} from '@ngrx/store';
+import {shoppingListReducer} from './shopping-list/store/shopping-list.reducer';
 // import {RecipesModule} from './recipes/recipes.module';
 
 @NgModule({
@@ -28,7 +30,10 @@ import { CoreModule } from './core/core.module';
     AuthModule,
     ShoppingModule,
     AppRoutesModule,
-    CoreModule
+    CoreModule,
+    StoreModule.forRoot({
+      shoppingList: shoppingListReducer
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
