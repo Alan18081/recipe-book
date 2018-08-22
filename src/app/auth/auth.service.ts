@@ -1,13 +1,21 @@
 import * as firebase from 'firebase';
 import {Router} from '@angular/router';
 import {Injectable} from '@angular/core';
+import {IAppState} from '../store';
+import {Store} from '@ngrx/store';
+import * as AuthActions from './store/auth.actions';
 
 @Injectable()
 export class AuthService {
-  token: string;
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private store: Store<IAppState>
+  ) {}
   signupUser(email: string, password: string) {
     firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(email, password)
+      .then(() => {
+        this.store.dispatch(new AuthActions.SignUp());
+      })
       .catch(error => console.log(error));
   }
 
@@ -16,7 +24,9 @@ export class AuthService {
       .then(response => {
         console.log(response);
         firebase.auth().currentUser.getIdToken()
-          .then(token => this.token = token);
+          .then(token => {
+            this.store.dispatch(new AuthActions.SetToken(token));
+          });
       })
       .catch(error => console.log(error));
   }
