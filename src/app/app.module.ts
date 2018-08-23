@@ -13,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { CoreModule } from './core/core.module';
 import {StoreModule} from '@ngrx/store';
 import {shoppingListReducer} from './shopping-list/store/shopping-list.reducer';
+import { authReducer } from './auth/store/auth.reducer';
 // import {RecipesModule} from './recipes/recipes.module';
 
 @NgModule({
@@ -32,7 +33,8 @@ import {shoppingListReducer} from './shopping-list/store/shopping-list.reducer';
     AppRoutesModule,
     CoreModule,
     StoreModule.forRoot({
-      shoppingList: shoppingListReducer
+      shoppingList: shoppingListReducer,
+      auth: authReducer
     })
   ],
   providers: [],
