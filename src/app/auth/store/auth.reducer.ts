@@ -1,5 +1,5 @@
+import * as R from 'ramda';
 import * as actions from './auth.actions';
-import {Map} from 'immutable';
 
 export interface IAuthState {
   token: string;
@@ -11,11 +11,13 @@ const initialState: IAuthState = {
   isAuth: false
 };
 
-const immutableInitialState = Map(initialState);
-
-export function authReducer(state = immutableInitialState, action: actions.AuthActions) {
+export function authReducer(state = initialState, action: actions.AuthActions) {
   switch (action.type) {
-    case actions.LOGOUT:
+    case actions.SET_TOKEN:
+      return R.merge(state, { token: action.payload });
+    case actions.SIGN_UP:
+    case actions.LOGIN_SUCCESS:
+      return R.merge(state, { isAuth: true });
     default:
       return state;
   }

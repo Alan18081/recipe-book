@@ -17,7 +17,7 @@
         </li>
       </ul>
       <ul class="navbar-nav ">
-        <ng-template [ngIf]="!isAuthenticated">
+        <ng-template [ngIf]="!(authState | async).isAuth">
           <li class="nav-item">
             <a routerLink="/signin" class="nav-link">
               Sign In
@@ -29,7 +29,7 @@
             </a>
           </li>
         </ng-template>
-        <ng-template [ngIf]="isAuthenticated">
+        <ng-template [ngIf]="(authState | async).isAuth">
           <li class="nav-item">
             <button class="nav-link" (click)="logout()">
               Logout

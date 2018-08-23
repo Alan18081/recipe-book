@@ -12,9 +12,12 @@ import {ShoppingModule} from './shopping-list/shopping.module';
 import { HomeComponent } from './home/home.component';
 import { CoreModule } from './core/core.module';
 import {StoreModule} from '@ngrx/store';
-import {shoppingListReducer} from './shopping-list/store/shopping-list.reducer';
-import { authReducer } from './auth/store/auth.reducer';
-// import {RecipesModule} from './recipes/recipes.module';
+import {reducers} from './store';
+import {EffectsModule} from '@ngrx/effects';
+import {AuthEffects} from './auth/store/auth.effects';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreDevtools } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -32,10 +35,10 @@ import { authReducer } from './auth/store/auth.reducer';
     ShoppingModule,
     AppRoutesModule,
     CoreModule,
-    StoreModule.forRoot({
-      shoppingList: shoppingListReducer,
-      auth: authReducer
-    })
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([AuthEffects]),
+    StoreRouterConnectingModule,
+    !environment.production ? StoreDevtools : []
   ],
   providers: [],
   bootstrap: [AppComponent]
