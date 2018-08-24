@@ -1,0 +1,10 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5050,
+  "username": "Alan",
+  "password": "morgan11",
+  "database": "recipe-book",
+  "entities": ["src/**/**.entity{.ts,.js}"],
+  "synchronize": true
+}
