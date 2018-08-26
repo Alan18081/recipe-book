@@ -1,6 +1,6 @@
 import {ActionReducerMap} from '@ngrx/store';
 import {authReducer, IAuthState} from './auth/store/auth.reducer';
-import {IShoppingListState} from './shopping-list/store/shopping-list.reducer';
+import {IShoppingListState, shoppingListReducer} from './shopping-list/store/shopping-list.reducer';
 
 
 export interface IAppState {
@@ -9,5 +9,6 @@ export interface IAppState {
 }
 
 export const reducers: ActionReducerMap<IAppState> = {
-  auth: authReducer
+  auth: authReducer,
+  shoppingList: shoppingListReducer
 };

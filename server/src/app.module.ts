@@ -14,4 +14,5 @@ import {RecipesModule} from './recipes/recipes.module';
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule {
+}

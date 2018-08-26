@@ -10,9 +10,8 @@
 <div class="row">
   <div class="col-4">
     <app-recipes-item
-      *ngFor="let recipeItem of recipes | filter:filterString:'name'"
+      *ngFor="let recipeItem of (recipesState | async).recipes | filter:filterString:'name'"
       [recipe]="recipeItem"
-      (selectedRecipe)="selectRecipe($event)"
       [routerLink]="['/recipes', recipeItem.id]"
     ></app-recipes-item>
   </div>

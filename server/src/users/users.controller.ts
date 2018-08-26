@@ -13,8 +13,7 @@ export class UsersController {
 
   @Get('')
   @UseGuards(AuthGuard('jwt'))
-  async findAll(@Request() req) {
-    console.log('USerssds', req.user);
+  async findAll() {
     return await this.usersService.findAll();
   }
 

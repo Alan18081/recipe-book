@@ -28,9 +28,8 @@ let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
     }
-    findAll(req) {
+    findAll() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log('USerssds', req.user);
             return yield this.usersService.findAll();
         });
     }
@@ -47,9 +46,8 @@ let UsersController = class UsersController {
 __decorate([
     common_1.Get(''),
     common_1.UseGuards(passport_1.AuthGuard('jwt')),
-    __param(0, common_1.Request()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "findAll", null);
 __decorate([

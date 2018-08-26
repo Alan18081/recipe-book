@@ -1,38 +1,56 @@
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Injectable} from '@angular/core';
-import 'rxjs/operators/mergeMap';
-import 'rxjs/operators/map';
-import {map, switchMap, mergeMap} from 'rxjs/operators';
-import {fromPromise} from 'rxjs/internal-compatibility';
+import {of} from 'rxjs';
+import {map, switchMap, mergeMap, catchError} from 'rxjs/operators';
 import * as AuthActions from './auth.actions';
-import * as firebase from 'firebase';
 import { Router } from '@angular/router';
+import {ILoginInfo} from '../interfaces/login-info.interface';
+import {ISignUpInfo} from '../interfaces/signup-info.interface';
+import {IAuthResponse} from '../interfaces/auth-response.interface';
+import {AuthService} from '../auth.service';
 
 @Injectable()
 export class AuthEffects {
+
+  constructor(
+    private actions$: Actions,
+    private router: Router,
+    private authService: AuthService
+  ) {}
+
+  @Effect()
+  authGetCurrentUser = this.actions$
+    .pipe(ofType(AuthActions.GET_CURRENT_USER))
+    .pipe(
+      switchMap((action: AuthActions.GetCurrentUser) => {
+        return this.authService.getUser()
+          .pipe(
+            map((body: IAuthResponse) => {
+              return new AuthActions.LoginSuccess(body);
+            }),
+            catchError((error) => {
+              return of(new AuthActions.LoginFailed(error));
+            })
+          )
+      })
+    );
+
   @Effect()
   authSignUp = this.actions$
     .pipe(ofType(AuthActions.SIGN_UP))
-    .pipe(map((action: AuthActions.Login) => {
+    .pipe(map((action: AuthActions.SignUp) => {
       return action.payload;
     }))
-    .pipe(switchMap((authData: {email: string, password: string}) => {
-      return fromPromise(firebase.auth().createUserWithEmailAndPassword(authData.email, authData.password));
+    .pipe(switchMap((authData: ISignUpInfo) => {
+      return this.authService.signUp(authData);
     }))
-    .pipe(switchMap(() => {
-      return fromPromise(firebase.auth().currentUser.getIdToken());
-    }))
-    .pipe(mergeMap((token: string) => {
-      this.router.navigate(['recipes']);
-      return [
-        {
-          type: AuthActions.LOGIN_SUCCESS
-        },
-        {
-          type: AuthActions.SET_TOKEN,
-          payload: token
-        }
-      ];
+    .pipe(mergeMap((body: IAuthResponse) => {
+      // this.router.navigate(['recipes']);
+      this.authService.setTokenInfo(body.token, body.expiresIn);
+      return [{
+          type: AuthActions.LOGIN_SUCCESS,
+          payload: body
+        }];
     }));
 
   @Effect()
@@ -41,24 +59,22 @@ export class AuthEffects {
     .pipe(map((action: AuthActions.Login) => {
       return action.payload;
     }))
-    .pipe(switchMap((authData: {email: string, password: string}) => {
-      return fromPromise(firebase.auth().signInWithEmailAndPassword(authData.email, authData.password))
+    .pipe(switchMap((authData: ILoginInfo) => {
+      return this.authService.login(authData);
     }))
-    .pipe(switchMap(() => {
-      return fromPromise(firebase.auth().currentUser.getIdToken());
-    }))
-    .pipe(mergeMap((token: string) => {
-      this.router.navigate(['recipes']);
-      return [
-        {
-          type: AuthActions.LOGIN_SUCCESS
-        },
-        {
-          type: AuthActions.SET_TOKEN,
-          payload: token
-        }
-      ];
+    .pipe(mergeMap((body: IAuthResponse) => {
+      this.authService.setTokenInfo(body.token, body.expiresIn);
+      return [{
+          type: AuthActions.LOGIN_SUCCESS,
+          payload: body
+        }];
     }));
 
-  constructor(private actions$: Actions, private router: Router) {}
+  @Effect()
+  authLogout = this.actions$
+    .pipe(ofType(AuthActions.LOGOUT))
+    .pipe(map(() => {
+      this.authService.removeTokenInfo();
+      return new AuthActions.LogoutSuccess();
+    }))
 }

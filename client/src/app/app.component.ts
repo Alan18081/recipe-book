@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import * as firebase from 'firebase';
+import {Store} from '@ngrx/store';
+import {IAppState} from './store';
+import * as AuthActions from './auth/store/auth.actions';
 
 @Component({
   selector: 'app-root',
@@ -7,10 +10,10 @@ import * as firebase from 'firebase';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+
+  constructor(private store: Store<IAppState>) {}
+
   ngOnInit() {
-    firebase.initializeApp({
-      apiKey: 'AIzaSyDi5gHhdw-M3tKlr-Wrft_Qric3wh96OYk',
-      authDomain: 'todo-ea259.firebaseio.com'
-    });
+    this.store.dispatch(new AuthActions.GetCurrentUser());
   }
 }

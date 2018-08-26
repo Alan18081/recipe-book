@@ -6,8 +6,9 @@ import { Ingredient } from '../../shared/ingredient.model';
 import {ShoppingService} from '../shopping.service';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
-import { IAppState, IShoppingList } from '../store/shopping-list.reducer';
 import * as actions from '../store/shopping-list.actions';
+import {IAppState} from '../../store.interface';
+import {IShoppingListState} from '../store/shopping-list.reducer';
 
 @Component({
   selector: 'app-shopping-list',
@@ -15,7 +16,7 @@ import * as actions from '../store/shopping-list.actions';
   styleUrls: ['./shopping-list.component.css']
 })
 export class ShoppingListComponent implements OnInit {
-  shoppingList: Observable<IShoppingList>;
+  shoppingList: Observable<IShoppingListState>;
   onIngredientAdded(ingredientAdded: {name: string, amount: number}): void {
    const newIngredient = new Ingredient(ingredientAdded.name, ingredientAdded.amount);
    this.shoppingService.addIngredient(newIngredient);

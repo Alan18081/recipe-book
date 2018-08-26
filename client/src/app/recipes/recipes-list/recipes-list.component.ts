@@ -1,25 +1,21 @@
-import {Component, OnInit} from '@angular/core';
-import {Recipe} from '../recipe.model';
-import {RecipesService} from '../recipes.service';
+import {Component} from '@angular/core';
+import {Recipe} from '../interfaces/recipe.interface';
+import {Observable} from 'rxjs/Rx';
+import {IFeatureState, IRecipesState} from '../store/recipes.reducer';
+import {Store} from '@ngrx/store';
+import {SelectRecipe} from '../store/recipes.actions';
 
 @Component({
   selector: 'app-recipes-list',
   templateUrl: './recipes-list.component.html',
   styleUrls: ['./recipes-list.component.css']
 })
-export class RecipesListComponent implements OnInit {
-  recipes: Recipe[] = [];
+export class RecipesListComponent {
+  recipesState: Observable<IRecipesState>;
   filterString = '';
-  constructor(private recipesService: RecipesService) { }
-
-  ngOnInit() {
-    this.recipesService.getRecipes();
-    this.recipesService.recipesChanged.subscribe((recipes: Recipe[]) => {
-      this.recipes = recipes;
-    });
-  }
+  constructor(private store: Store<IFeatureState>) { }
 
   selectRecipe(recipe: Recipe) {
-    this.recipesService.recipeSelected.next(recipe);
+    this.store.dispatch(new SelectRecipe(recipe));
   }
 }

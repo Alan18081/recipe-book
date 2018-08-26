@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {ShoppingService} from '../../shopping-list/shopping.service';
 import {Ingredient} from '../../shared/ingredient.model';
-import {Recipe} from '../recipe.model';
+import {Recipe} from '../interfaces/recipe.interface';
 import {RecipesService} from '../recipes.service';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import {ActivatedRoute, Params} from '@angular/router';
+import {Store} from '@ngrx/store';
+import {IFeatureState} from '../store/recipes.reducer';
+import * as RecipesActions from '../store/recipes.actions';
 
 @Component({
   selector: 'app-add-recipe',
@@ -17,23 +20,22 @@ export class AddRecipeComponent implements OnInit {
   recipeForm: FormGroup;
   constructor(
     private route: ActivatedRoute,
-    private shoppingService: ShoppingService,
-    private recipesService: RecipesService
+    private store: Store<IFeatureState>
   ) { }
   ngOnInit() {
     const {id} = this.route.snapshot.params;
     this.isEditing = !!id;
-    if (this.isEditing) {
-      this.activeRecipe = this.recipesService.getRecipeById(id);
+
+    if(this.isEditing) {
+      this.store.select('recipes')
+        .subscribe(({activeRecipe}) => {
+          this.activeRecipe = activeRecipe;
+          this.setForm();
+        });
     }
-    this.setForm();
-    this.route.params.subscribe((params: Params) => {
-      this.isEditing = params.id;
-      this.activeRecipe = this.recipesService.getRecipeById(params.id);
-      if (this.isEditing) {
-        this.setForm();
-      }
-    });
+    else {
+      this.setForm();
+    }
   }
 
   setForm() {
@@ -63,18 +65,12 @@ export class AddRecipeComponent implements OnInit {
   }
 
   submitHandler(): void {
-    const {title, description, imageUrl, ingredients} = this.recipeForm.value;
-    const ingredientsArr = [];
-    for (let item of ingredients) {
-      ingredientsArr.push(new Ingredient(item.name, item.amount));
+    if(this.isEditing) {
+      this.store.dispatch(new RecipesActions.UpdateRecipeSuccess(this.recipeForm.value));
     }
-    const newRecipe = new Recipe(
-      title,
-      description,
-      imageUrl,
-      ingredients
-    );
-    this.recipesService.addRecipe(newRecipe);
+    else {
+      this.store.dispatch(new RecipesActions.AddRecipeSuccess(this.recipeForm.value));
+    }
   }
 
 
@@ -94,4 +90,9 @@ export class AddRecipeComponent implements OnInit {
       };
     }
   }
+
+  get ingredientsControl() {
+    return <FormArray>this.recipeForm.get('ingredients');
+  }
+
 }

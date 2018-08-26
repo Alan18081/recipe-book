@@ -1,11 +1,12 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
-export class LoggingInterceptor implements HttpInterceptor {
+export class BaseUrlInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(req).pipe(tap((event) => {
-      console.log(event);
-    }));
+    console.log(req.url);
+    const updatedReq = req.clone({
+      url: `http://localhost:5000${req.url}`
+    });
+    return next.handle(updatedReq);
   }
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {NgForm} from '@angular/forms';
-import { IAppState } from '../../store.interface';
+import { IAppState } from '../../../store.interface';
 import { Store } from '@ngrx/store';
-import * as AuthActions from '../store/auth.actions';
+import * as AuthActions from '../../store/auth.actions';
 
 @Component({
   selector: 'app-signin',

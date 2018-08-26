@@ -26,11 +26,19 @@ const signup_dto_1 = require("./dto/signup.dto");
 const users_service_1 = require("../users/users.service");
 const password_service_1 = require("../core/password.service");
 const auth_service_1 = require("./auth.service");
+const user_entity_1 = require("../users/user.entity");
+const passport_1 = require("@nestjs/passport");
 let AuthController = class AuthController {
     constructor(usersService, passwordService, authService) {
         this.usersService = usersService;
         this.passwordService = passwordService;
         this.authService = authService;
+    }
+    getUserByToken(req) {
+        if (!req.user) {
+            throw new common_1.HttpException('Token is not valid', common_1.HttpStatus.UNAUTHORIZED);
+        }
+        return req.user;
     }
     login({ email, password }) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -45,12 +53,27 @@ let AuthController = class AuthController {
             return yield this.authService.createToken(email, user.id);
         });
     }
-    signUp({ username, email, password }) {
+    signUp(userInfo) {
         return __awaiter(this, void 0, void 0, function* () {
-            return 'Sign Up';
+            const user = yield this.usersService.findByEmail(userInfo.email);
+            if (user) {
+                throw new common_1.HttpException('User with this email already exists', common_1.HttpStatus.FOUND);
+            }
+            const newUser = yield this.usersService.createUser(userInfo);
+            delete newUser.password;
+            const token = yield this.authService.createToken(newUser.email, newUser.id);
+            return Object.assign({ user: newUser }, token);
         });
     }
 };
+__decorate([
+    common_1.Get('currentUser'),
+    common_1.UseGuards(passport_1.AuthGuard('jwt')),
+    __param(0, common_1.Req()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", user_entity_1.User)
+], AuthController.prototype, "getUserByToken", null);
 __decorate([
     common_1.Post('login'),
     __param(0, common_1.Body()),
@@ -60,6 +83,7 @@ __decorate([
 ], AuthController.prototype, "login", null);
 __decorate([
     common_1.Post('signup'),
+    common_1.HttpCode(200),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [signup_dto_1.SignUpDto]),

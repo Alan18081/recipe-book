@@ -1,20 +1,19 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import {Recipe} from '../../recipe.model';
-import {RecipesService} from '../../recipes.service';
+import { Component, Input} from '@angular/core';
+import {Recipe} from '../../interfaces/recipe.interface';
+import {IFeatureState} from '../../store/recipes.reducer';
+import {Store} from '@ngrx/store';
+import * as RecipesActions from '../../store/recipes.actions';
 
 @Component({
   selector: 'app-recipes-item',
   templateUrl: './recipes-item.component.html',
   styleUrls: ['./recipes-item.component.css']
 })
-export class RecipesItemComponent implements OnInit {
+export class RecipesItemComponent {
   @Input() recipe: Recipe;
-  constructor(private recipesService: RecipesService) { }
-
-  ngOnInit() {
-  }
+  constructor(private store: Store<IFeatureState>) { }
 
   selectEvent() {
-    this.recipesService.recipeSelected.next(this.recipe);
+    this.store.dispatch(new RecipesActions.SelectRecipe(this.recipe));
   }
 }

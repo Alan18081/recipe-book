@@ -1,7 +1,10 @@
 import { Component, OnInit} from '@angular/core';
-import {Recipe} from '../recipe.model';
-import {RecipesService} from '../recipes.service';
+import {Recipe} from '../interfaces/recipe.interface';
 import { ActivatedRoute, Params } from '@angular/router';
+import {Observable} from 'rxjs/Rx';
+import {Store} from '@ngrx/store';
+import {IFeatureState, IRecipesState} from '../store/recipes.reducer';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-recipes-details',
@@ -9,16 +12,14 @@ import { ActivatedRoute, Params } from '@angular/router';
   styleUrls: ['./recipes-details.component.css']
 })
 export class RecipesDetailsComponent implements OnInit {
-  recipe: Recipe;
-  constructor(private recipesService: RecipesService, private route: ActivatedRoute) { }
+  recipe: Observable<Recipe>;
+  constructor(private store: Store<IFeatureState>) { }
 
   ngOnInit() {
-    this.setRecipe(this.route.snapshot.params.id);
-    this.route.params.subscribe((params: Params) => {
-      this.setRecipe(params.id);
-    });
-  }
-  setRecipe(id): void {
-    this.recipe = this.recipesService.getRecipeById(id);
+    this.recipe = this.store
+      .select('recipes')
+      .pipe(map((recipesState: IRecipesState) => {
+        return recipesState.activeRecipe;
+      }))
   }
 }

@@ -1,13 +1,14 @@
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { Recipe } from './recipes/recipe.model';
+import { Recipe } from './recipes/interfaces/recipe.interface';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { RecipesService } from './recipes/recipes.service';
+import {IAppState} from './store.interface';
+import {Store} from '@ngrx/store';
 
 @Injectable()
 export class RecipeResolverService implements Resolve<Recipe> {
-  constructor(private recipesService: RecipesService) {}
+  constructor(private store: Store<IAppState>) {}
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Recipe> | Promise<Recipe> | Recipe {
-    return this.recipesService.getRecipeById(route.params.id);
+    return this.store.select('recipes');
   }
 }

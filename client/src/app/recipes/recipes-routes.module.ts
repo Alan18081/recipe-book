@@ -4,12 +4,16 @@ import {AuthGuard} from '../auth/auth-guard.service';
 import {AddRecipeComponent} from './edit-recipe/add-recipe.component';
 import {RecipesDetailsComponent} from './recipes-details/recipes-details.component';
 import {RecipeResolverService} from '../recipe-resolver.service';
-import {RecipesComponent} from './recipes.component';
+import {RecipesResolver} from './recipes-resolver.service';
+import {RecipesListComponent} from './recipes-list/recipes-list.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: RecipesComponent,
+    component: RecipesListComponent,
+    resolve: {
+      recipes: RecipesResolver
+    },
     children: [
       {
         path: 'new',

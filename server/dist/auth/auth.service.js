@@ -29,8 +29,8 @@ let AuthService = class AuthService {
         return __awaiter(this, void 0, void 0, function* () {
             const token = jwt.sign({ email, id }, config_1.JWT_SECRET, { expiresIn: config_1.JWT_EXPIRES_IN });
             return {
-                expires_in: config_1.JWT_EXPIRES_IN,
-                access_token: token
+                expiresIn: config_1.JWT_EXPIRES_IN,
+                token
             };
         });
     }

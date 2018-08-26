@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../../auth/auth.service';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {IAuthState} from '../../auth/store/auth.reducer';
+import {IAppState} from '../../store';
+import * as AuthActions from '../../auth/store/auth.actions';
 
 @Component({
   selector: 'app-header',
@@ -12,8 +13,7 @@ import {IAuthState} from '../../auth/store/auth.reducer';
 export class HeaderComponent implements OnInit {
   authState: Observable<IAuthState>;
   constructor(
-    private authService: AuthService,
-    private store: Store
+    private store: Store<IAppState>
   ) {}
 
   ngOnInit() {
@@ -21,6 +21,6 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout();
+    this.store.dispatch(new AuthActions.Logout());
   }
 }

@@ -10,8 +10,8 @@ export class AuthService {
   async createToken(email: string, id: number) {
     const token = jwt.sign({ email, id }, JWT_SECRET, {expiresIn: JWT_EXPIRES_IN});
     return {
-      expires_in: JWT_EXPIRES_IN,
-      access_token: token
+      expiresIn: JWT_EXPIRES_IN,
+      token
     }
   }
 

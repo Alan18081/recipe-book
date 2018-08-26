@@ -1,5 +1,4 @@
 import {NgModule} from '@angular/core';
-import {RecipesComponent} from './recipes.component';
 import {RecipesDetailsComponent} from './recipes-details/recipes-details.component';
 import {RecipesListComponent} from './recipes-list/recipes-list.component';
 import {RecipesItemComponent} from './recipes-list/recipes-item/recipes-item.component';
@@ -11,15 +10,16 @@ import {FilterPipe} from './filter.pipe';
 import {AddRecipeComponent} from './edit-recipe/add-recipe.component';
 import { StoreModule } from '@ngrx/store';
 import { recipesReducer } from './store/recipes.reducer';
+import {RecipesResolver} from './recipes-resolver.service';
+import {RecipeResolverService} from '../recipe-resolver.service';
 
 @NgModule({
   declarations: [
-    RecipesComponent,
     RecipesDetailsComponent,
     RecipesListComponent,
     RecipesItemComponent,
     FilterPipe,
-    AddRecipeComponent
+    AddRecipeComponent,
   ],
   imports: [
     CommonModule,
@@ -28,6 +28,10 @@ import { recipesReducer } from './store/recipes.reducer';
     RecipesRoutesModule,
     SharedModule,
     StoreModule.forFeature('recipes', recipesReducer)
+  ],
+  providers: [
+    RecipesResolver,
+    RecipeResolverService
   ]
 })
 export class RecipesModule {}
