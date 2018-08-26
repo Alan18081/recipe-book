@@ -1,0 +1,49 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a href="#" class="navbar-brand">Recipe book</a>
+    <div class="collapse navbar-collapse d-flex justify-content-between">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/recipes"
+            routerLinkActive="active"
+          >
+            Recipes Book
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/shopping" routerLinkActive="active">Shopping list</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ">
+        <ng-template [ngIf]="!(authState | async).isAuth">
+          <li class="nav-item">
+            <a routerLink="/signin" class="nav-link">
+              Sign In
+            </a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/signup" class="nav-link">
+              Sign Up
+            </a>
+          </li>
+        </ng-template>
+        <ng-template [ngIf]="(authState | async).isAuth">
+          <li class="nav-item">
+            <button class="nav-link" (click)="logout()">
+              Logout
+            </button>
+          </li>
+        </ng-template>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <a href="#" class="dropdown-toggle" routerLinkActive="active">Toggle <span class="caret"></span></a>
+      <ul class="dropdown-menu dropdown-menu-right">
+        <li class="dropdown-item">Save data</li>
+        <li class="dropdown-item">Fetch data</li>
+      </ul>
+    </div>
+  </div>
+</nav>

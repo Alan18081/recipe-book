@@ -1,0 +1,16 @@
+<div class="list-group-item list-group-item-action" (click)="selectEvent()">
+  <div class="d-flex">
+    <div class="flex-grow-1">
+      <h5>{{ recipe.name }}</h5>
+      <div>{{ recipe.description}}</div>
+    </div>
+    <div>
+      <img
+        class="img-fluid"
+        style="width: 40px;"
+        src="{{ recipe.imageUrl }}"
+        alt="{{ recipe.name }}"
+      >
+    </div>
+  </div>
+</div>

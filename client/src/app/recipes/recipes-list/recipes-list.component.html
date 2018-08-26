@@ -1,0 +1,21 @@
+<button class="btn btn-outline-primary btn-sm" routerLink="/recipes/new">New recipe</button>
+<hr>
+<input
+  type="text"
+  class="form-control"
+  placeholder="Recipe name"
+  [(ngModel)]="filterString"
+>
+<hr>
+<div class="row">
+  <div class="col-4">
+    <app-recipes-item
+      *ngFor="let recipeItem of (recipesState | async).recipes | filter:filterString:'name'"
+      [recipe]="recipeItem"
+      [routerLink]="['/recipes', recipeItem.id]"
+    ></app-recipes-item>
+  </div>
+  <div class="col-8">
+    <router-outlet></router-outlet>
+  </div>
+</div>

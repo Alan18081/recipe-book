@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div *ngIf="recipe">
+        <img src="{{ (recipe | async).imageUrl }}" class="img-fluid" alt="{{recipe.name}}">
+        <h3>{{ (recipe | async).name }}</h3>
+        <p>
+          {{ (recipe | async).description}}
+        </p>
+        <div class="dropdown" appDropdown>
+          <button class="btn btn-outline-primary dropdown-toggle btn-sm">
+            Manage recipe <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" #recipeDropdown>
+            <li class="dropdown-item">To shopping List</li>
+            <li class="dropdown-item" [routerLink]="['edit']">Edit recipe</li>
+            <li class="dropdown-item">Remove recipe</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
