@@ -1,10 +1,6 @@
 {
   "type": "postgres",
-  "host": "localhost",
-  "port": 5050,
-  "username": "Alan",
-  "password": "morgan11",
-  "database": "recipe-book",
+  "url": "postgres://itjmwohl:gTCIjjdQe2iWw79mbwkH06Mh18TJV6Eu@horton.elephantsql.com:5432/itjmwohl",
   "entities": ["src/**/**.entity{.ts,.js}"],
   "synchronize": true
 }
