@@ -10,6 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const class_validator_1 = require("class-validator");
+const class_transformer_1 = require("class-transformer");
+const add_ingredient_dto_1 = require("../../ingredients/dto/add-ingredient.dto");
 class AddRecipeDto {
 }
 __decorate([
@@ -25,8 +27,9 @@ __decorate([
     __metadata("design:type", Object)
 ], AddRecipeDto.prototype, "imageUrl", void 0);
 __decorate([
-    class_validator_1.IsArray(),
-    __metadata("design:type", Object)
+    class_validator_1.ValidateNested(),
+    class_transformer_1.Type(() => add_ingredient_dto_1.AddIngredientDto),
+    __metadata("design:type", Array)
 ], AddRecipeDto.prototype, "ingredients", void 0);
 exports.AddRecipeDto = AddRecipeDto;
 //# sourceMappingURL=add-recipe.dto.js.map

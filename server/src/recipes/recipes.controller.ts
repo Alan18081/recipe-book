@@ -10,15 +10,15 @@ export class RecipesController {
   constructor(private recipesService: RecipesService) {}
 
   @Get()
-  // @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'))
   public async findAll(@Req() req) {
     return await this.recipesService.findAll(req.user.id);
   }
 
   @Post()
-  // @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'))
   async addRecipe(@Body() recipeInfo: AddRecipeDto, @Req() req) {
-    return await this.recipesService.addRecipe(recipeInfo, 1);
+    return await this.recipesService.addRecipe(recipeInfo, req.user.id);
   }
 
   @Put(':id')

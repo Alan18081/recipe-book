@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
+const ingredient_entity_1 = require("../ingredients/ingredient.entity");
 let Recipe = class Recipe {
 };
 __decorate([
@@ -32,6 +33,11 @@ __decorate([
     typeorm_1.Column(),
     __metadata("design:type", Number)
 ], Recipe.prototype, "userId", void 0);
+__decorate([
+    typeorm_1.ManyToMany(type => ingredient_entity_1.Ingredient, ingredient => ingredient.recipes),
+    typeorm_1.JoinTable(),
+    __metadata("design:type", Array)
+], Recipe.prototype, "ingredients", void 0);
 Recipe = __decorate([
     typeorm_1.Entity()
 ], Recipe);

@@ -21,6 +21,7 @@ import { environment } from '../environments/environment';
 import {BaseUrlInterceptor} from './shared/base-url.interceptor';
 import {TokenInterceptor} from './shared/token.interceptor';
 import {RecipesEffects} from './recipes/store/recipes.effects';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import {RecipesEffects} from './recipes/store/recipes.effects';
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'server-app'}),
+    BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
     SharedModule,
@@ -41,7 +43,7 @@ import {RecipesEffects} from './recipes/store/recipes.effects';
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([AuthEffects, RecipesEffects]),
     StoreRouterConnectingModule,
-    !environment.production ? StoreDevtoolsModule : []
+    !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true },

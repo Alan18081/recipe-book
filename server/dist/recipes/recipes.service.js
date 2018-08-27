@@ -24,18 +24,28 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const recipe_entity_1 = require("./recipe.entity");
+const ingredient_entity_1 = require("../ingredients/ingredient.entity");
 let RecipesService = class RecipesService {
-    constructor(recipesRepository) {
+    constructor(recipesRepository, ingredientsRepository) {
         this.recipesRepository = recipesRepository;
+        this.ingredientsRepository = ingredientsRepository;
     }
     findAll(userId) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.recipesRepository.find({ userId });
+            return this.recipesRepository
+                .createQueryBuilder('recipe')
+                .where('recipe.userId = :userId', { userId })
+                .leftJoinAndSelect('recipe.ingredients', 'ingredient')
+                .getMany();
         });
     }
     addRecipe(recipeInfo, userId) {
         return __awaiter(this, void 0, void 0, function* () {
             const newRecipe = Object.assign({}, new recipe_entity_1.Recipe(), recipeInfo, { userId });
+            const ingredients = recipeInfo.ingredients;
+            const ingredientsEntities = ingredients.map(ing => (Object.assign({}, new ingredient_entity_1.Ingredient(), ing, { userId })));
+            yield Promise.all(ingredientsEntities.map(ing => this.ingredientsRepository.save(ing)));
+            newRecipe.ingredients = ingredientsEntities;
             return yield this.recipesRepository.save(newRecipe);
         });
     }
@@ -54,7 +64,9 @@ let RecipesService = class RecipesService {
 RecipesService = __decorate([
     common_1.Injectable(),
     __param(0, typeorm_1.InjectRepository(recipe_entity_1.Recipe)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __param(1, typeorm_1.InjectRepository(ingredient_entity_1.Ingredient)),
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository])
 ], RecipesService);
 exports.RecipesService = RecipesService;
 //# sourceMappingURL=recipes.service.js.map

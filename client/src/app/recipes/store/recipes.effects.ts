@@ -5,6 +5,8 @@ import {switchMap, map} from 'rxjs/operators';
 import {RecipesService} from '../recipes.service';
 import {Recipe} from '../interfaces/recipe.interface';
 import {IRecipeInfo} from '../interfaces/recipe-info.interface';
+import {catchError} from 'rxjs/internal/operators';
+import {of} from 'rxjs/index';
 
 @Injectable()
 export class RecipesEffects {
@@ -15,13 +17,18 @@ export class RecipesEffects {
 
   @Effect()
   fetchRecipes = this.actions$
-    .pipe(ofType(actions.FETCH_RECIPES))
-    .pipe(switchMap(() => {
-      return this.recipesService.fetchRecipes();
-    }))
-    .pipe(map((recipes: Recipe[]) => {
-      return new actions.FetchRecipesSuccess(recipes);
-    }));
+    .pipe(
+      ofType(actions.FETCH_RECIPES),
+      switchMap(() => {
+        return this.recipesService.fetchRecipes();
+      }),
+      map((recipes: Recipe[]) => {
+        return new actions.FetchRecipesSuccess(recipes);
+      }),
+      catchError((error: Error) => {
+        return of(new actions.FetchRecipesFailed(error))
+      })
+    );
 
   @Effect()
   addRecipe = this.actions$

@@ -11,12 +11,13 @@ const typeorm_1 = require("@nestjs/typeorm");
 const recipes_controller_1 = require("./recipes.controller");
 const recipes_service_1 = require("./recipes.service");
 const recipe_entity_1 = require("./recipe.entity");
+const ingredient_entity_1 = require("../ingredients/ingredient.entity");
 let RecipesModule = class RecipesModule {
 };
 RecipesModule = __decorate([
     common_1.Module({
         imports: [
-            typeorm_1.TypeOrmModule.forFeature([recipe_entity_1.Recipe])
+            typeorm_1.TypeOrmModule.forFeature([recipe_entity_1.Recipe, ingredient_entity_1.Ingredient])
         ],
         controllers: [recipes_controller_1.RecipesController],
         providers: [recipes_service_1.RecipesService],

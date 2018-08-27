@@ -10,7 +10,9 @@ export class RecipesService {
 
   constructor(
     @InjectRepository(Recipe)
-    private readonly recipesRepository: Repository<Recipe>
+    private readonly recipesRepository: Repository<Recipe>,
+    @InjectRepository(Ingredient)
+    private readonly ingredientsRepository: Repository<Ingredient>
   ) {}
 
   async findAll(userId: number): Promise<Recipe[]> {
@@ -22,21 +24,19 @@ export class RecipesService {
   }
 
   async addRecipe(recipeInfo: AddRecipeDto, userId: number): Promise<Recipe> {
-    console.log(recipeInfo);
     const newRecipe = {
       ...new Recipe(),
       ...recipeInfo,
       userId
     };
-    console.log(newRecipe)
 
     const ingredients = recipeInfo.ingredients;
     const ingredientsEntities = ingredients.map(ing => ({
       ...new Ingredient(),
-      ...ing
+      ...ing,
+      userId
     }));
-    await Promise.all(ingredientsEntities.map(ing => this.recipesRepository.save(ing)));
-
+    await Promise.all(ingredientsEntities.map(ing => this.ingredientsRepository.save(ing)));
     newRecipe.ingredients = ingredientsEntities;
     return await this.recipesRepository.save(newRecipe);
   }

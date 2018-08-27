@@ -1,4 +1,6 @@
-import {IsString, IsArray} from 'class-validator';
+import {IsString, IsArray, ValidateNested} from 'class-validator';
+import {Type} from 'class-transformer';
+import {AddIngredientDto} from '../../ingredients/dto/add-ingredient.dto';
 
 export class AddRecipeDto {
   @IsString() name;
@@ -7,5 +9,7 @@ export class AddRecipeDto {
 
   @IsString() imageUrl;
 
-  @IsArray() ingredients;
+  @ValidateNested()
+  @Type(() => AddIngredientDto)
+  ingredients: AddIngredientDto[];
 }

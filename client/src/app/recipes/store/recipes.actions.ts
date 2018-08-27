@@ -4,6 +4,7 @@ import {IRecipeInfo} from '../interfaces/recipe-info.interface';
 
 export const FETCH_RECIPES = 'FETCH_RECIPES';
 export const FETCH_RECIPES_SUCCESS = 'FETCH_RECIPES_SUCCESS';
+export const FETCH_RECIPES_FAILED = 'FETCH_RECIPES_FAILED';
 export const ADD_RECIPE = 'ADD_RECIPE';
 export const ADD_RECIPE_SUCCESS = 'ADD_RECIPE_SUCCESS';
 export const REMOVE_RECIPE = 'REMOVE_RECIPE';
@@ -20,6 +21,11 @@ export class FetchRecipes implements Action {
 export class FetchRecipesSuccess implements Action {
   readonly type = FETCH_RECIPES_SUCCESS;
   constructor(public payload: Recipe[]) {}
+}
+
+export class FetchRecipesFailed implements Action {
+  readonly type = FETCH_RECIPES_FAILED;
+  constructor(public payload: Error) {}
 }
 
 export class AddRecipe implements Action {
@@ -66,6 +72,9 @@ export class SetFilterString implements Action {
 }
 
 export type RecipesActions =
+  FetchRecipes |
+  FetchRecipesSuccess |
+  FetchRecipesFailed |
   UpdateRecipe |
   AddRecipe |
   AddRecipeSuccess |
