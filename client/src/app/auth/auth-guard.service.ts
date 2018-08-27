@@ -12,6 +12,7 @@ export class AuthGuard implements CanActivate {
     private store: Store<IAppState>
   ) {}
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+    console.log('Hello');
     return this.store.select('auth')
       .pipe(take(1))
       .pipe(map((authState: IAuthState) => authState.isAuth));

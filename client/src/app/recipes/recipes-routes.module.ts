@@ -14,6 +14,7 @@ const routes: Routes = [
     resolve: {
       recipes: RecipesResolver
     },
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'new',

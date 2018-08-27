@@ -72,7 +72,6 @@ export class SetFilterString implements Action {
 }
 
 export type RecipesActions =
-  FetchRecipes |
   FetchRecipesSuccess |
   FetchRecipesFailed |
   UpdateRecipe |

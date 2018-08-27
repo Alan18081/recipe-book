@@ -45,7 +45,7 @@ export class AuthEffects {
       return this.authService.signUp(authData);
     }))
     .pipe(mergeMap((body: IAuthResponse) => {
-      // this.router.navigate(['recipes']);
+      this.router.navigate(['recipes']);
       this.authService.setTokenInfo(body.token, body.expiresIn);
       return [{
           type: AuthActions.LOGIN_SUCCESS,
@@ -55,20 +55,26 @@ export class AuthEffects {
 
   @Effect()
   authLogin = this.actions$
-    .pipe(ofType(AuthActions.LOGIN))
-    .pipe(map((action: AuthActions.Login) => {
-      return action.payload;
-    }))
-    .pipe(switchMap((authData: ILoginInfo) => {
-      return this.authService.login(authData);
-    }))
-    .pipe(mergeMap((body: IAuthResponse) => {
-      this.authService.setTokenInfo(body.token, body.expiresIn);
-      return [{
-          type: AuthActions.LOGIN_SUCCESS,
-          payload: body
-        }];
-    }));
+    .pipe(
+      ofType(AuthActions.LOGIN),
+      map((action: AuthActions.Login) => {
+        return action.payload;
+      }),
+      switchMap((authData: ILoginInfo) => {
+        return this.authService.login(authData)
+          .pipe(
+            catchError((error: Error) => {
+              return of(new AuthActions.LoginFailed(error));
+            })
+          );
+      }),
+      map((body: IAuthResponse) => {
+        this.authService.setTokenInfo(body.token, body.expiresIn);
+        this.router.navigate(['recipes']);
+        return new AuthActions.LoginSuccess(body);
+      }),
+
+    );
 
   @Effect()
   authLogout = this.actions$
