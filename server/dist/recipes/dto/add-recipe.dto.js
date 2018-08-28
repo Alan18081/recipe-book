@@ -16,15 +16,15 @@ class AddRecipeDto {
 }
 __decorate([
     class_validator_1.IsString(),
-    __metadata("design:type", Object)
+    __metadata("design:type", String)
 ], AddRecipeDto.prototype, "name", void 0);
 __decorate([
     class_validator_1.IsString(),
-    __metadata("design:type", Object)
+    __metadata("design:type", String)
 ], AddRecipeDto.prototype, "description", void 0);
 __decorate([
     class_validator_1.IsString(),
-    __metadata("design:type", Object)
+    __metadata("design:type", String)
 ], AddRecipeDto.prototype, "imageUrl", void 0);
 __decorate([
     class_validator_1.ValidateNested(),

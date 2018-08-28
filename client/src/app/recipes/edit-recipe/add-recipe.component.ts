@@ -65,11 +65,12 @@ export class AddRecipeComponent implements OnInit {
   }
 
   submitHandler(): void {
+    console.log('dfg');
     if(this.isEditing) {
-      this.store.dispatch(new RecipesActions.UpdateRecipeSuccess(this.recipeForm.value));
+      this.store.dispatch(new RecipesActions.UpdateRecipe(this.recipeForm.value));
     }
     else {
-      this.store.dispatch(new RecipesActions.AddRecipeSuccess(this.recipeForm.value));
+      this.store.dispatch(new RecipesActions.AddRecipe(this.recipeForm.value));
     }
   }
 

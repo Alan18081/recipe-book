@@ -20,13 +20,15 @@ export class RecipesEffects {
     .pipe(
       ofType(actions.FETCH_RECIPES),
       switchMap(() => {
-        return this.recipesService.fetchRecipes();
+        return this.recipesService.fetchRecipes()
+          .pipe(
+            catchError((error: Error) => {
+              return of(new actions.FetchRecipesFailed(error))
+            })
+          );
       }),
       map((recipes: Recipe[]) => {
         return new actions.FetchRecipesSuccess(recipes);
-      }),
-      catchError((error: Error) => {
-        return of(new actions.FetchRecipesFailed(error))
       })
     );
 

@@ -11,7 +11,6 @@ import {AddRecipeComponent} from './edit-recipe/add-recipe.component';
 import { StoreModule } from '@ngrx/store';
 import { recipesReducer } from './store/recipes.reducer';
 import {RecipesResolver} from './recipes-resolver.service';
-import {RecipeResolverService} from '../recipe-resolver.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +30,6 @@ import {RecipeResolverService} from '../recipe-resolver.service';
   ],
   providers: [
     RecipesResolver,
-    RecipeResolverService
   ]
 })
 export class RecipesModule {}

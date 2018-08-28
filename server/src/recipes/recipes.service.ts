@@ -38,7 +38,7 @@ export class RecipesService {
     }));
     await Promise.all(ingredientsEntities.map(ing => this.ingredientsRepository.save(ing)));
     newRecipe.ingredients = ingredientsEntities;
-    return await this.recipesRepository.save(newRecipe);
+    return await this.recipesRepository.save(newRecipe) as Recipe;
   }
 
   async updateRecipe(recipeId: number, recipeInfo: AddRecipeDto): Promise<Recipe> {

@@ -20,11 +20,19 @@ const initialState: IRecipesState = {
 
 export function recipesReducer(state = initialState, {type, payload}: actions.RecipesActions) {
   switch (type) {
+    case actions.FETCH_RECIPES_SUCCESS:
+      return R.merge(
+        state,
+        {
+          recipes: payload
+        }
+      );
+
     case actions.ADD_RECIPE_SUCCESS:
       return R.merge(
         state,
         {
-          recipes: R.concat(state.recipes, payload)
+          recipes: R.append(state.recipes, payload)
         }
       );
 
