@@ -4,9 +4,10 @@
   "description": "Recipe book app with Angular and Nest",
   "main": "index.js",
   "scripts": {
-    "install": "cd client && npm i && cd ../server && npm i",
+    "install": "npm i && cd client && npm i && cd ../server && npm i",
     "client": "cd client && npm start",
-    "server": "cd server && npm run start:dev"
+    "server": "cd server && npm run start:dev",
+    "dev": "concurrently \"npm run client\" \"npm run server\""
   },
   "repository": {
     "type": "git",
@@ -17,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/Alan18081/recipe-book/issues"
   },
-  "homepage": "https://github.com/Alan18081/recipe-book#readme"
+  "homepage": "https://github.com/Alan18081/recipe-book#readme",
+  "dependencies": {
+    "concurrently": "^4.0.1"
+  }
 }

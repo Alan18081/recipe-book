@@ -11,10 +11,6 @@ const routes: Routes = [
   {
     path: '',
     component: RecipesListComponent,
-    resolve: {
-      recipes: RecipesResolver
-    },
-    canActivate: [AuthGuard],
     children: [
       {
         path: 'new',
@@ -43,7 +39,8 @@ const routes: Routes = [
     RouterModule
   ],
   providers: [
-    AuthGuard
+    AuthGuard,
+    RecipesResolver
   ]
 })
 export class RecipesRoutesModule {}

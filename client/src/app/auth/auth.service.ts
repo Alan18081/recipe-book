@@ -19,8 +19,11 @@ export class AuthService {
     return this.http.post('/signup', signUpInfo);
   }
 
-  getToken() {
-    return localStorage.getItem('authToken');
+  getTokenInfo() {
+    return {
+      token: localStorage.getItem('authToken'),
+      expiresIn: localStorage.getItem('expiresIn')
+    };
   }
 
   getUser() {

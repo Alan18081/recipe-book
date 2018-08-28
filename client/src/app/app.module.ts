@@ -22,6 +22,7 @@ import {BaseUrlInterceptor} from './shared/base-url.interceptor';
 import {TokenInterceptor} from './shared/token.interceptor';
 import {RecipesEffects} from './recipes/store/recipes.effects';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { RecipesResolver } from './recipes/recipes-resolver.service';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    RecipesResolver
   ],
   bootstrap: [AppComponent]
 })

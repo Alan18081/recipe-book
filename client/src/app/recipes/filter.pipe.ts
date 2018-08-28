@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {Recipe} from '../recipes/interfaces/recipe.interface';
+import {Recipe} from './interfaces/recipe.interface';
 
 @Pipe({
   name: 'filter'
@@ -7,6 +7,7 @@ import {Recipe} from '../recipes/interfaces/recipe.interface';
 export class FilterPipe implements PipeTransform {
 
   transform(value: Recipe[], filterString: string, property: string): any {
+    console.log(value);
     if (!value.length || !filterString) {
       return value;
     }

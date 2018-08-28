@@ -26,9 +26,14 @@ export class AuthEffects {
         return this.authService.getUser()
           .pipe(
             map((body: IAuthResponse) => {
-              return new AuthActions.LoginSuccess(body);
+              const token = this.authService.getTokenInfo();
+              return new AuthActions.LoginSuccess({
+                ...token,
+                user: body
+              });
             }),
             catchError((error) => {
+              console.log(error);
               return of(new AuthActions.LoginFailed(error));
             })
           )
